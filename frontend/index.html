@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .input-section input {
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+        }
+
+        .input-section button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .input-section button:hover {
+            background-color: #45a049;
+        }
+
+        .recommendations {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .book-card {
+            background-color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+        }
+
+        .book-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .book-card h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .book-card p {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Recommender</h1>
+    </header>
+
+    <div class="container">
+        <div class="input-section">
+            <input type="text" id="genre" placeholder="Enter a genre (e.g., Mystery)">
+            <button onclick="getRecommendations()">Get Recommendations</button>
+        </div>
+
+        <div class="recommendations" id="recommendations">
+            <!-- Book recommendations will appear here -->
+        </div>
+    </div>
+
+    <script>
+        function getRecommendations() {
+            const genre = document.getElementById("genre").value.trim();
+            const recommendationsDiv = document.getElementById("recommendations");
+
+            // Clear previous recommendations
+            recommendationsDiv.innerHTML = '';
+
+            if (genre === "") {
+                alert("Please enter a genre!");
+                return;
+            }
+
+            // Sample books data (replace with real API if needed)
+            const books = {
+                "Mystery": [
+                    {
+                        title: "The Silent Patient",
+                        author: "Alex Michaelides",
+                        img: "https://images.unsplash.com/photo-1522748495163-9606d732f94e"
+                    },
+                    {
+                        title: "Big Little Lies",
+                        author: "Liane Moriarty",
+                        img: "https://images.unsplash.com/photo-1531419261757-bec5c9de2f8d"
+                    }
+                ],
+                "Romance": [
+                    {
+                        title: "Pride and Prejudice",
+                        author: "Jane Austen",
+                        img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+                    },
+                    {
+                        title: "The Notebook",
+                        author: "Nicholas Sparks",
+                        img: "https://images.unsplash.com/photo-1564612078-850efdd60e0a"
+                    }
+                ],
+                "Sci-Fi": [
+                    {
+                        title: "Dune",
+                        author: "Frank Herbert",
+                        img: "https://images.unsplash.com/photo-1530084200151-81b79b9d6e1d"
+                    },
+                    {
+                        title: "Ender's Game",
+                        author: "Orson Scott Card",
+                        img: "https://images.unsplash.com/photo-1503593588435-6f9d1f545604"
+                    }
+                ]
+            };
+
+            // Get books based on genre
+            const genreBooks = books[genre];
+            if (!genreBooks) {
+                alert("No recommendations available for this genre.");
+                return;
+            }
+
+            genreBooks.forEach(book => {
+                const bookCard = document.createElement("div");
+                bookCard.classList.add("book-card");
+
+                const bookImage = document.createElement("img");
+                bookImage.src = book.img;
+                bookCard.appendChild(bookImage);
+
+                const bookTitle = document.createElement("h3");
+                bookTitle.textContent = book.title;
+                bookCard.appendChild(bookTitle);
+
+                const bookAuthor = document.createElement("p");
+                bookAuthor.textContent = "by " + book.author;
+                bookCard.appendChild(bookAuthor);
+
+                recommendationsDiv.appendChild(bookCard);
+            });
+        }
+    </script>
+</body>
+</html>
